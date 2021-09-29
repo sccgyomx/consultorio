@@ -25,6 +25,9 @@ class visits extends FormRequest
     {
         return [
             //
+            'user_id'=>'required',
+            'medical_patients_id'=>'required',
+            'health_conditions_id'=>'required',
         ];
     }
 }

@@ -15,6 +15,7 @@ class health_condition extends Model
         'oxigen_saturation',
         'temperature',
         'fasting_glucose',
-        'postprandial_glucose',        
+        'postprandial_glucose',
+        'medical_patients_id'     
     ];
 }

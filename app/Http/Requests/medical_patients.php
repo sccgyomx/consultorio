@@ -31,8 +31,9 @@ class medical_patients extends FormRequest
             'date_of_birth'=>'required',
             'address'=>'required',
             'phone'=>'required',
-            'weight'=>'required',
-            'height'=>'required',
+            'weigth'=>'required',
+            'heigth'=>'required',
+            'user_id'=>'required',
         ];
     }
 }

@@ -15,7 +15,8 @@ class medical_patient extends Model
         'date_of_birth',
         'address',
         'phone',
-        'weight',
-        'height',
+        'weigth',
+        'heigth',
+        'user_id'
     ];
 }
