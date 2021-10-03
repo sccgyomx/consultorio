@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/addPatient', [App\Http\Controllers\add_pactient::class, 'index'])->name('addPatient');
+Route::get('{any}', function () {
+    return view('app');
+})->where('any','.*');

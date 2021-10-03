@@ -15,6 +15,8 @@ class MedicalPatientController extends Controller
     public function index()
     {
         //
+        $medical_patients= medical_patient::all();
+        return response()->json($medical_patients);
     }
 
     /**
@@ -36,6 +38,8 @@ class MedicalPatientController extends Controller
     public function store(Request $request)
     {
         //
+        $medical_patient=medical_patient::create($request->post());
+        return response()->json(['medical_patient'=> $medical_patient]);
     }
 
     /**
@@ -47,6 +51,7 @@ class MedicalPatientController extends Controller
     public function show(medical_patient $medical_patient)
     {
         //
+        return response()->json($medical_patient);
     }
 
     /**
@@ -70,6 +75,8 @@ class MedicalPatientController extends Controller
     public function update(Request $request, medical_patient $medical_patient)
     {
         //
+        $medical_patient->fill($request->post())->save();
+        return response()->json(['medical_patient'=> $medical_patient]);
     }
 
     /**
@@ -81,5 +88,7 @@ class MedicalPatientController extends Controller
     public function destroy(medical_patient $medical_patient)
     {
         //
+        $medical_patient->delete();
+        return response()->json();
     }
 }
