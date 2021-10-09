@@ -4,9 +4,7 @@
             <div class="col-lg-12 mb-2 mt-2">
                 <a
                     type="button"
-                    :to="{
-                        name: crearMedicalPatients
-                    }"
+                    @click="crearMP"
                     class="btn btn-success my-2 my-sm-0"
                 >
                     <i class="bi bi-plus-circle" style="font-size: 1rem;"></i>

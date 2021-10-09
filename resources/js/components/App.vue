@@ -1,6 +1,6 @@
 <template>
     <main>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2 ">
             <a class="navbar-brand">
                 <img
                     src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDY0IDY0IiB3aWR0aD0iNTE
@@ -76,29 +76,58 @@
                             >Inicio</router-link
                         >
                     </li>
-                    <li class="nav-item active">
-                        <router-link
-                            exact-active-class="active"
-                            class="nav-link"
-                            to="/medicalPatients"
-                            >Pacientes</router-link
-                        >
-                    </li>
+
+                    <template v-if="!currentUser">
+                        <li class="nav-item active">
+                            <router-link
+                                exact-active-class="active"
+                                class="nav-link"
+                                to="/login"
+                                >Login</router-link
+                            >
+                        </li>
+                        <li class="nav-item active">
+                            <router-link
+                                exact-active-class="active"
+                                class="nav-link"
+                                to="/register"
+                                >Register</router-link
+                            >
+                        </li>
+                    </template>
+                    <template v-else>
+                        <li class="nav-item active">
+                            <router-link
+                                exact-active-class="active"
+                                class="nav-link"
+                                to="/medicalPatients"
+                                >Pacientes</router-link
+                            >
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a
+                                id="navbarDropdown"
+                                class="nav-link dropdown-toggle"
+                                role="button"
+                                aria-expanded="false"
+                                aria-haspopup="true"
+                                data-toggle="dropdown"
+                            >
+                                {{ currentUser.name }}
+                                <span class="carret"></span>
+                            </a>
+
+                            <div
+                                class="dropdown-menu"
+                                aria-labelledby="navbarDropdown"
+                            >
+                                <a @click.prevent="logout" class="dropdown-item"
+                                    >Logout <i class="bi bi-box-arrow-right"></i
+                                ></a>
+                            </div>
+                        </li>
+                    </template>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input
-                        class="form-control mr-sm-2"
-                        type="search"
-                        placeholder="Search"
-                        aria-label="Search"
-                    />
-                    <button
-                        class="btn btn-outline-success my-2 my-sm-0"
-                        type="submit"
-                    >
-                        Search
-                    </button>
-                </form>
             </div>
         </nav>
         <div>
@@ -109,7 +138,19 @@
 
 <script>
 export default {
-    name: "App"
+    name: "App",
+    methods: {
+        logout() {
+            this.$store.commit("logout");
+            this.$router.push("/login");
+        }
+    },
+    computed: {
+        currentUser() {
+            console.log(this.$store.getters.currentUser);
+            return this.$store.getters.currentUser;
+        }
+    }
 };
 </script>
 
