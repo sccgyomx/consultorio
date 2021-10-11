@@ -19,7 +19,7 @@ class CreateMedicalPatientsTable extends Migration
             $table->string('name');
             $table->Integer('age');
             $table->string('gender');
-            $table->float('date_of_birth');
+            $table->date('date_of_birth');
             $table->string('address');
             $table->string('phone');
             $table->float('weight');

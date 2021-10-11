@@ -18,5 +18,7 @@ export function initialize(store, router) {
         if (error.response.status === 401) {
             store.commit("logout");
         }
+
+        return Promise.reject(error);
     });
 }

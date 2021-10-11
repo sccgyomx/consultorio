@@ -1,5 +1,7 @@
 <template>
-    <h1>Hola</h1>
+    <div class="container text-center ">
+        <h1 class="display-5 ">Inicio</h1>
+    </div>
 </template>
 
 <script>

@@ -8,7 +8,7 @@ export default {
         isLoggedIn: !!user,
         loading: false,
         auth_error: null,
-        cutomers: []
+        medical_patients: []
     },
     getters: {
         isLoading(state) {
@@ -23,8 +23,8 @@ export default {
         authError(state) {
             return state.auth_error;
         },
-        cutomers(state) {
-            return state.loading;
+        medical_patients(state) {
+            return state.medical_patients;
         }
     },
     mutations: {
@@ -50,11 +50,28 @@ export default {
             localStorage.removeItem("user");
             state.isLoggerIn = false;
             state.currentUser = null;
+        },
+        updateMedicalPatients(state, payload) {
+            state.medical_patients = payload;
         }
     },
     actions: {
         login(context) {
             context.commit("login");
+        },
+        getMedicalPatients(context) {
+            axios
+                .get("/api/medicalPatients", {
+                    headers: {
+                        Authorization: `Bearer ${context.state.currentUser.token}`
+                    }
+                })
+                .then(response => {
+                    context.commit("updateMedicalPatients", response.data);
+                })
+                .catch(error => {
+                    this.medical_patients = [];
+                });
         }
     }
 };

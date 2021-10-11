@@ -12,22 +12,22 @@ class MedicalPatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function all()
     {
         //
         $medical_patients= medical_patient::all();
         return response()->json($medical_patients);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    // /**
+    //  * Show the form for creating a new resource.
+    //  *
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function create()
+    // {
+    //     //
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -35,9 +35,10 @@ class MedicalPatientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function new(Request $request)
     {
         //
+        
         $medical_patient=medical_patient::create($request->post());
         return response()->json(['medical_patient'=> $medical_patient]);
     }
@@ -48,22 +49,24 @@ class MedicalPatientController extends Controller
      * @param  \App\Models\medical_patient  $medical_patient
      * @return \Illuminate\Http\Response
      */
-    public function show(medical_patient $medical_patient)
+    public function get($id)
     {
         //
+
+        $medical_patient = medical_patient::whereId($id)->first();
         return response()->json($medical_patient);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\medical_patient  $medical_patient
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(medical_patient $medical_patient)
-    {
-        //
-    }
+    // /**
+    //  * Show the form for editing the specified resource.
+    //  *
+    //  * @param  \App\Models\medical_patient  $medical_patient
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function edit(medical_patient $medical_patient)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -79,16 +82,16 @@ class MedicalPatientController extends Controller
         return response()->json(['medical_patient'=> $medical_patient]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\medical_patient  $medical_patient
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(medical_patient $medical_patient)
-    {
-        //
-        $medical_patient->delete();
-        return response()->json();
-    }
+    // /**
+    //  * Remove the specified resource from storage.
+    //  *
+    //  * @param  \App\Models\medical_patient  $medical_patient
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function destroy(medical_patient $medical_patient)
+    // {
+    //     //
+    //     $medical_patient->delete();
+    //     return response()->json();
+    // }
 }

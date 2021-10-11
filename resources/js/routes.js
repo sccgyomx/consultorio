@@ -1,9 +1,10 @@
 const Home = () => import("./components/Home.vue");
 
 // componentes para medical patients
+const MainMP = () => import("./components/medical_patient/Main.vue");
 const CrearMP = () => import("./components/medical_patient/Crear.vue");
-const MostrarMP = () => import("./components/medical_patient/Mostrar.vue");
-const EditarMP = () => import("./components/medical_patient/Editar.vue");
+const ListarMP = () => import("./components/medical_patient/Mostrar.vue");
+const VerMP = () => import("./components/medical_patient/Ver.vue");
 const Login = () => import("./components/auth/login.vue");
 const Register = () => import("./components/auth/Register.vue");
 
@@ -18,21 +19,6 @@ export const routes = [
         }
     },
     {
-        name: "mostrarMedicalPatients",
-        path: "/medicalPatients",
-        component: MostrarMP
-    },
-    {
-        name: "crearMedicalPatients",
-        path: "/crearMedicalPatients",
-        component: CrearMP
-    },
-    {
-        name: "editarMedicalPatient",
-        path: "/editarMedicalPatients/:id",
-        component: EditarMP
-    },
-    {
         name: "Login",
         path: "/login",
         component: Login
@@ -41,5 +27,27 @@ export const routes = [
         name: "Registro",
         path: "/register",
         component: Register
+    },
+
+    {
+        path: "/medicalPatients",
+        component: MainMP,
+        meta: {
+            requiresAuth: true
+        },
+        children: [
+            {
+                path: "/",
+                component: ListarMP
+            },
+            {
+                path: "new",
+                component: CrearMP
+            },
+            {
+                path: ":id",
+                component: VerMP
+            }
+        ]
     }
 ];

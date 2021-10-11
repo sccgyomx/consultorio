@@ -3,8 +3,8 @@
         <div class="login row justify-content-center">
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header">
-                        Inicio de sesion
+                    <div class="card-header text-center ">
+                        <h1 class="display-5 ">Inicio de sesión</h1>
                     </div>
                     <div class="card-body">
                         <form @submit.prevent="authenticate">
