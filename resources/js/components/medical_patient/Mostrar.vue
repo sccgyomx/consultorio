@@ -46,21 +46,8 @@
                                             class="btn btn-outline-success my-2 my-sm-0"
                                         >
                                             <i class="bi bi-eye"></i>
+                                            Ver
                                         </router-link>
-                                        <a
-                                            class="btn btn-outline-danger"
-                                            type="button"
-                                            @click="
-                                                deleteMedical_patient(
-                                                    medical_patient.id
-                                                )
-                                            "
-                                        >
-                                            <i
-                                                class="bi bi-trash"
-                                                style="font-size: 1rem;"
-                                            ></i>
-                                        </a>
                                     </td>
                                 </tr>
                             </template>

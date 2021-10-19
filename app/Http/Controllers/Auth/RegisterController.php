@@ -8,6 +8,9 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -73,5 +76,41 @@ class RegisterController extends Controller
             'address' => $data['address'],
             'phone' => $data['phone'],
         ]);
+    }
+
+    public function store(Request $request) {
+        
+        $exito = false;
+        DB::beginTransaction();
+
+        try { 
+            $user = new User;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->address = $request->address;
+            $user->phone = $request->phone;
+
+            $user->save();
+
+            DB::commit();
+            $exito = true;
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $exito = false;
+            return response()->json([
+                "status" => "error",
+                "message" => "Error al guardar los datos",
+                "error" => $th
+            ], 500);
+        }
+
+        if ($exito) {
+            return response()->json([
+                "status" => "ok",
+                "message" => "Información guardada correctamente",
+                "User" => $user
+            ], 200);
+        }
     }
 }

@@ -60,6 +60,7 @@ export default {
             context.commit("login");
         },
         getMedicalPatients(context) {
+            console.log(context);
             axios
                 .get("/api/medicalPatients", {
                     headers: {

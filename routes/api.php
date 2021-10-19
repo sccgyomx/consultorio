@@ -24,12 +24,15 @@ Route::group(['prefix' => 'auth'], function ($router) {
 
 });
 
+Route::post('register','App\Http\Controllers\Auth\RegisterController@store');
+
 //Route::resource('medical_patient', App\Http\Controllers\MedicalPatientController::class)->only(['index','store','update','show','destroy']);
 
 Route::group(['middleware' => 'jwt.auth'], function ($router) {
 
     Route::get('medicalPatients', 'App\Http\Controllers\MedicalPatientController@all');
     Route::get('medicalPatients/{id}', 'App\Http\Controllers\MedicalPatientController@get');
+    Route::get('search/{paciente_id}', 'App\Http\Controllers\MedicalPatientController@search');
     Route::post('medicalPatients/new', 'App\Http\Controllers\MedicalPatientController@new');
 
 

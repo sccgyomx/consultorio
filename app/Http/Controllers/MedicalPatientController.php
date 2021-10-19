@@ -57,6 +57,11 @@ class MedicalPatientController extends Controller
         return response()->json($medical_patient);
     }
 
+    public function search($id){
+        $medical_patient=medical_patient::where('paciente_id', 'LIKE', $id)->get()->first();
+        return response()->json($medical_patient);
+    }
+
     // /**
     //  * Show the form for editing the specified resource.
     //  *
