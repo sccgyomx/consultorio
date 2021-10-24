@@ -25,7 +25,7 @@
         <div class="container" v-if="currentUser.role === 'patient'">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <template v-if="patient">
+                    <template v-if="patient == 0">
                         <div class="card">
                             <div class="card-header">
                                 <h1 class="display-5">Datos del paciente</h1>
@@ -97,9 +97,76 @@
                     </template>
                     <template v-else>
                         <div class="card">
-                            <div class="card-header"></div>
-                            <div class="card-body"></div>
+                            <div class="card-header">
+                                <h1 class="display-5">Buscar Paciente</h1>
+                            </div>
+                            <div class="card-body">
+                                <label for="">
+                                    Introdusca su numero de paciente
+                                </label>
+                                <label for="">
+                                    El cual le proporcionado por el medico
+                                </label>
+                                <form>
+                                    <div class="form-group">
+                                        <input
+                                            class="form-control mr-sm-2"
+                                            type="text"
+                                            placeholder="Numero de paciente"
+                                            aria-label="Search"
+                                            v-model="numberPatient"
+                                        />
+                                    </div>
+                                    <button
+                                        class="btn btn-outline-success btn-block"
+                                        type="button"
+                                        @click="buscarMyPatient"
+                                    >
+                                        Buscar
+                                    </button>
+                                    <div
+                                        v-if="errors.length > 0"
+                                        class="alert alert-danger mt-2 mb-2"
+                                        role="alert"
+                                    >
+                                        <ul>
+                                            <li
+                                                v-for="error in errors"
+                                                :key="error.id"
+                                            >
+                                                {{ error }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
+
+                        <template v-if="medical_patient != null">
+                            <div class="table-reponsive mt-2 mb-2">
+                                <table class="table table-dark rounded">
+                                    <tr>
+                                        <th>Numero de paciente</th>
+                                        <td>
+                                            {{ medical_patient.id }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nombre del paciente</th>
+                                        <td>
+                                            {{ medical_patient.name }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <button
+                                class="btn btn-success btn-block"
+                                type="button"
+                                @click="sincronizar"
+                            >
+                                Sincronizar
+                            </button>
+                        </template>
                     </template>
                 </div>
             </div>
@@ -123,13 +190,80 @@ export default {
     },
     data() {
         return {
-            patient: null
+            patient: null,
+            numberPatient: null,
+            medical_patient: null,
+            errors: []
         };
     },
     computed: {
         currentUser() {
             // console.log(this.$store.getters.currentUser);
             return this.$store.getters.currentUser;
+        }
+    },
+    methods: {
+        buscarMyPatient() {
+            this.errors = [];
+            if (this.numberPatient != null) {
+                if (this.validarEntrada(this.numberPatient)) {
+                    axios
+                        .get(`/api/medicalPatients/${this.numberPatient}`, {
+                            headers: {
+                                Authorization: `Bearer ${this.currentUser.token}`
+                            }
+                        })
+                        .then(response => {
+                            if (
+                                response.data.name === undefined ||
+                                response.data.id === undefined
+                            ) {
+                                this.errors.push(
+                                    "Compruebe si su numero de paciente es correcto"
+                                );
+                            } else {
+                                this.medical_patient = response.data;
+                            }
+                        });
+                } else {
+                    this.errors.push(
+                        "El valor introducido debe ser un numero entero"
+                    );
+                }
+            } else {
+                this.errors.push("Debe llenar el campo");
+            }
+        },
+
+        validarEntrada(entrada) {
+            let valoresAceptados = /^[0-9]+$/;
+            if (entrada.match(valoresAceptados)) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+
+        async sincronizar() {
+            this.medical_patient.paciente_id = this.currentUser.id;
+            console.log(this.medical_patient);
+            let res = await axios
+                .post("/api/medicalPatients/update", this.medical_patient, {
+                    headers: {
+                        Authorization: `Bearer ${this.currentUser.token}`
+                    }
+                })
+                .then(response => {
+                    console.log(response.data);
+                    if (response.status === 200) {
+                        this.patient = response.data;
+                    } else {
+                        console.log("algo salio mal al registrar");
+                    }
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                });
         }
     }
 };
@@ -153,5 +287,8 @@ export default {
     background-color: #343a40 !important;
     color: white !important;
     text-decoration: none;
+}
+.w-80 {
+    width: 80% !important;
 }
 </style>

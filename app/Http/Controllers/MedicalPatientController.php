@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\medical_patient;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class MedicalPatientController extends Controller
@@ -80,11 +81,25 @@ class MedicalPatientController extends Controller
      * @param  \App\Models\medical_patient  $medical_patient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, medical_patient $medical_patient)
+    public function update(Request $request)
     {
         //
-        $medical_patient->fill($request->post())->save();
-        return response()->json(['medical_patient'=> $medical_patient]);
+        DB::beginTransaction();
+
+        $medical_patient=medical_patient::find($request->id);;
+        $medical_patient->name = $request ->name;
+        $medical_patient->age = $request ->age;
+        $medical_patient->gender = $request ->gender;
+        $medical_patient->date_of_birth = $request ->date_of_birth;
+        $medical_patient->address = $request ->address;
+        $medical_patient->phone = $request ->phone;
+        $medical_patient->weight = $request ->weight;
+        $medical_patient->height = $request ->height;
+        $medical_patient->save();
+
+        DB::commit();
+
+        return response()->json($request);
     }
 
     // /**
