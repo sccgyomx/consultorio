@@ -86,7 +86,7 @@ class MedicalPatientController extends Controller
         //
         DB::beginTransaction();
 
-        $medical_patient=medical_patient::find($request->id);;
+        $medical_patient=medical_patient::find($request->id);
         $medical_patient->name = $request ->name;
         $medical_patient->age = $request ->age;
         $medical_patient->gender = $request ->gender;
@@ -95,6 +95,7 @@ class MedicalPatientController extends Controller
         $medical_patient->phone = $request ->phone;
         $medical_patient->weight = $request ->weight;
         $medical_patient->height = $request ->height;
+        $medical_patient->paciente_id = $request -> paciente_id;
         $medical_patient->save();
 
         DB::commit();

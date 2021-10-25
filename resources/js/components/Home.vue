@@ -3,20 +3,14 @@
         <div class="container" v-if="currentUser.role === 'doctor'">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h1 class="display-5">Listado de acciones</h1>
-                        </div>
-                        <div class="card-body">
-                            <ul class="lista-groupo">
-                                <router-link
-                                    class="lista-groupo-item"
-                                    to="/medicalPatients"
-                                    >Ver todos los pacientes</router-link
-                                >
-                            </ul>
-                        </div>
-                    </div>
+                    <h1 class="display-5">Listado de acciones</h1>
+                    <ul class="lista-groupo">
+                        <router-link
+                            class="lista-groupo-item"
+                            to="/medicalPatients"
+                            >Ver todos los pacientes</router-link
+                        >
+                    </ul>
                 </div>
             </div>
         </div>
@@ -25,122 +19,115 @@
         <div class="container" v-if="currentUser.role === 'patient'">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <template v-if="patient == 0">
-                        <div class="card">
-                            <div class="card-header">
-                                <h1 class="display-5">Datos del paciente</h1>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-reponsive ">
-                                    <table class="table table-dark rounded">
-                                        <tr>
-                                            <th>Numero de paciente</th>
-                                            <td>
-                                                {{ patient.id }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Nombre del paciente</th>
-                                            <td>
-                                                {{ patient.name }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Genero del paciente</th>
-                                            <td>
-                                                {{ patient.gender }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                Fecha de nacimiento del paciente
-                                            </th>
-                                            <td>
-                                                {{ patient.date_of_birth }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Direccion del paciente</th>
-                                            <td>
-                                                {{ patient.address }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                Numero de telefono del paciente
-                                            </th>
-                                            <td>
-                                                {{ patient.phone }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                Peso del paciente (En
-                                                Kilogramos)
-                                            </th>
-                                            <td>
-                                                {{ patient.weight }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                Altura del paciente (En Metros)
-                                            </th>
-                                            <td>
-                                                {{ patient.height }}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
+                    <template v-if="patient.length != 0">
+                        <h1 class="display-5">Datos del paciente</h1>
+                        <div class="table-reponsive ">
+                            <table class="table table-dark rounded">
+                                <tr>
+                                    <th>Numero de paciente</th>
+                                    <td>
+                                        {{ patient.id }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Nombre del paciente</th>
+                                    <td>
+                                        {{ patient.name }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Genero del paciente</th>
+                                    <td>
+                                        {{ patient.gender }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Fecha de nacimiento del paciente
+                                    </th>
+                                    <td>
+                                        {{ patient.date_of_birth }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Direccion del paciente</th>
+                                    <td>
+                                        {{ patient.address }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Numero de telefono del paciente
+                                    </th>
+                                    <td>
+                                        {{ patient.phone }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Peso del paciente (En Kilogramos)
+                                    </th>
+                                    <td>
+                                        {{ patient.weight }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Altura del paciente (En Metros)
+                                    </th>
+                                    <td>
+                                        {{ patient.height }}
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <router-link
+                                :to="
+                                    `/medicalPatients/healtConditions${patient.id}`
+                                "
+                                class="btn btn-warning btn-block mb-2 mt-2"
+                            >
+                                Agregar signos vitales
+                            </router-link>
                         </div>
                     </template>
                     <template v-else>
-                        <div class="card">
-                            <div class="card-header">
-                                <h1 class="display-5">Buscar Paciente</h1>
+                        <h1 class="display-5">Buscar Paciente</h1>
+                        <label for="">
+                            Introdusca su numero de paciente
+                        </label>
+                        <label for="">
+                            El cual le proporcionado por el medico
+                        </label>
+                        <form>
+                            <div class="form-group">
+                                <input
+                                    class="form-control mr-sm-2"
+                                    type="text"
+                                    placeholder="Numero de paciente"
+                                    aria-label="Search"
+                                    v-model="numberPatient"
+                                />
                             </div>
-                            <div class="card-body">
-                                <label for="">
-                                    Introdusca su numero de paciente
-                                </label>
-                                <label for="">
-                                    El cual le proporcionado por el medico
-                                </label>
-                                <form>
-                                    <div class="form-group">
-                                        <input
-                                            class="form-control mr-sm-2"
-                                            type="text"
-                                            placeholder="Numero de paciente"
-                                            aria-label="Search"
-                                            v-model="numberPatient"
-                                        />
-                                    </div>
-                                    <button
-                                        class="btn btn-outline-success btn-block"
-                                        type="button"
-                                        @click="buscarMyPatient"
-                                    >
-                                        Buscar
-                                    </button>
-                                    <div
-                                        v-if="errors.length > 0"
-                                        class="alert alert-danger mt-2 mb-2"
-                                        role="alert"
-                                    >
-                                        <ul>
-                                            <li
-                                                v-for="error in errors"
-                                                :key="error.id"
-                                            >
-                                                {{ error }}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </form>
+                            <button
+                                class="btn btn-outline-success btn-block"
+                                type="button"
+                                @click="buscarMyPatient"
+                            >
+                                Buscar
+                            </button>
+                            <div
+                                v-if="errors.length > 0"
+                                class="alert alert-danger mt-2 mb-2"
+                                role="alert"
+                            >
+                                <ul>
+                                    <li v-for="error in errors" :key="error.id">
+                                        {{ error }}
+                                    </li>
+                                </ul>
                             </div>
-                        </div>
+                        </form>
 
                         <template v-if="medical_patient != null">
                             <div class="table-reponsive mt-2 mb-2">

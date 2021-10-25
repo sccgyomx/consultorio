@@ -7,6 +7,7 @@ const ListarMP = () => import("./components/medical_patient/Mostrar.vue");
 const VerMP = () => import("./components/medical_patient/Ver.vue");
 const Login = () => import("./components/auth/login.vue");
 const Register = () => import("./components/auth/Register.vue");
+const CrearHC = () => import("./components/medical_patient/HealtCondition.vue");
 
 // rutas
 export const routes = [
@@ -43,6 +44,10 @@ export const routes = [
             {
                 path: "new",
                 component: CrearMP
+            },
+            {
+                path: "healtConditions:id",
+                component: CrearHC
             },
             {
                 path: ":id",
