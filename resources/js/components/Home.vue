@@ -177,7 +177,7 @@ export default {
     },
     data() {
         return {
-            patient: null,
+            patient: {},
             numberPatient: null,
             medical_patient: null,
             errors: []

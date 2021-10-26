@@ -7,6 +7,20 @@ use Illuminate\Http\Request;
 
 class HealthConditionController extends Controller
 {
+
+
+    public function new(Request $request)
+    {
+        //
+        
+        $health_condition=health_condition::create($request->post());
+        return response()->json(['health_condition'=> $health_condition]);
+    }
+
+
+
+
+
     /**
      * Display a listing of the resource.
      *

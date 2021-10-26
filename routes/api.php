@@ -35,6 +35,7 @@ Route::group(['middleware' => 'jwt.auth'], function ($router) {
     Route::get('search/{paciente_id}', 'App\Http\Controllers\MedicalPatientController@search');
     Route::post('medicalPatients/new', 'App\Http\Controllers\MedicalPatientController@new');
     Route::post('medicalPatients/update', 'App\Http\Controllers\MedicalPatientController@update');
+    Route::post('healtConditions/new', 'App\Http\Controllers\HealthConditionController@new');
 
 
 });
