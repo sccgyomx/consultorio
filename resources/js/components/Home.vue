@@ -2,7 +2,7 @@
     <div class="container">
         <div class="container" v-if="currentUser.role === 'doctor'">
             <div class="row justify-content-center">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <h1 class="display-5">Listado de acciones</h1>
                     <ul class="lista-groupo">
                         <router-link
@@ -18,10 +18,10 @@
         <!-- logica para el paciente -->
         <div class="container" v-if="currentUser.role === 'patient'">
             <div class="row justify-content-center">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <template v-if="patient.length != 0">
                         <h1 class="display-5">Datos del paciente</h1>
-                        <div class="table-reponsive ">
+                        <div class="table-reponsive">
                             <table class="table table-dark rounded">
                                 <tr>
                                     <th>Numero de paciente</th>
@@ -42,9 +42,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>
-                                        Fecha de nacimiento del paciente
-                                    </th>
+                                    <th>Fecha de nacimiento del paciente</th>
                                     <td>
                                         {{ patient.date_of_birth }}
                                     </td>
@@ -56,25 +54,19 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>
-                                        Numero de telefono del paciente
-                                    </th>
+                                    <th>Numero de telefono del paciente</th>
                                     <td>
                                         {{ patient.phone }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>
-                                        Peso del paciente (En Kilogramos)
-                                    </th>
+                                    <th>Peso del paciente (En Kilogramos)</th>
                                     <td>
                                         {{ patient.weight }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>
-                                        Altura del paciente (En Metros)
-                                    </th>
+                                    <th>Altura del paciente (En Metros)</th>
                                     <td>
                                         {{ patient.height }}
                                     </td>
@@ -82,9 +74,7 @@
                             </table>
 
                             <router-link
-                                :to="
-                                    `/medicalPatients/healtConditions${patient.id}`
-                                "
+                                :to="`/medicalPatients/healtConditions${patient.id}`"
                                 class="btn btn-warning btn-block mb-2 mt-2"
                             >
                                 Agregar signos vitales
@@ -93,9 +83,7 @@
                     </template>
                     <template v-else>
                         <h1 class="display-5">Buscar Paciente</h1>
-                        <label for="">
-                            Introdusca su numero de paciente
-                        </label>
+                        <label for=""> Introdusca su numero de paciente </label>
                         <label for="">
                             El cual le proporcionado por el medico
                         </label>
@@ -168,10 +156,10 @@ export default {
         axios
             .get(`/api/search/${this.currentUser.id}`, {
                 headers: {
-                    Authorization: `Bearer ${this.currentUser.token}`
-                }
+                    Authorization: `Bearer ${this.currentUser.token}`,
+                },
             })
-            .then(response => {
+            .then((response) => {
                 this.patient = response.data;
             });
     },
@@ -180,14 +168,14 @@ export default {
             patient: {},
             numberPatient: null,
             medical_patient: null,
-            errors: []
+            errors: [],
         };
     },
     computed: {
         currentUser() {
             // console.log(this.$store.getters.currentUser);
             return this.$store.getters.currentUser;
-        }
+        },
     },
     methods: {
         buscarMyPatient() {
@@ -197,10 +185,10 @@ export default {
                     axios
                         .get(`/api/medicalPatients/${this.numberPatient}`, {
                             headers: {
-                                Authorization: `Bearer ${this.currentUser.token}`
-                            }
+                                Authorization: `Bearer ${this.currentUser.token}`,
+                            },
                         })
-                        .then(response => {
+                        .then((response) => {
                             if (
                                 response.data.name === undefined ||
                                 response.data.id === undefined
@@ -237,10 +225,10 @@ export default {
             let res = await axios
                 .post("/api/medicalPatients/update", this.medical_patient, {
                     headers: {
-                        Authorization: `Bearer ${this.currentUser.token}`
-                    }
+                        Authorization: `Bearer ${this.currentUser.token}`,
+                    },
                 })
-                .then(response => {
+                .then((response) => {
                     console.log(response.data);
                     if (response.status === 200) {
                         this.patient = response.data;
@@ -248,11 +236,11 @@ export default {
                         console.log("algo salio mal al registrar");
                     }
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log(error.response.data);
                 });
-        }
-    }
+        },
+    },
 };
 </script>
 

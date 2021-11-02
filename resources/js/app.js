@@ -1,12 +1,6 @@
 require("./bootstrap");
 
-import vue from "vue";
-
 import Vuex from "vuex";
-
-window.Vue = vue;
-
-import App from "./components/App.vue";
 
 // importar axios
 
@@ -22,20 +16,23 @@ import { initialize } from "./helpers/general";
 
 import Vue from "vue";
 
+window.Vue = Vue;
+
+import App from "./components/App.vue";
+
 const store = new Vuex.Store(StoreData);
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 
 const router = new VueRouter({
     mode: "history",
-    routes: routes
+    routes: routes,
 });
 
 initialize(store, router);
 
-const app = new Vue({
-    el: "#app",
+new Vue({
     router: router,
     store,
-    render: h => h(App)
-});
+    render: (h) => h(App),
+}).$mount("#app");

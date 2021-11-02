@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\health_condition;
 use Illuminate\Http\Request;
@@ -17,7 +18,12 @@ class HealthConditionController extends Controller
         return response()->json(['health_condition'=> $health_condition]);
     }
 
-
+    public function get($id)
+    {
+        //
+        $health_conditions = DB::table('health_conditions')->where(['medical_patients_id'=>$id])->get();
+        return response()->json($health_conditions);
+    }
 
 
 

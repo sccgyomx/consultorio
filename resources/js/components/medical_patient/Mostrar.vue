@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <template v-if="roleUser === true">
+        <template v-if="roleUser">
             <div class="row">
                 <div class="col-lg-12 mb-2 mt-2">
                     <div class="container text-center ">
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </template>
-        <template>
+        <template v-else>
             <h1>Pagina no encontrada</h1>
         </template>
     </div>
